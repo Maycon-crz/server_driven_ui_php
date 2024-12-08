@@ -1,0 +1,48 @@
+### Variáveis globais
+@baseUrl = http://localhost/fv/server_driven_ui_php
+# ou @baseUrl = http://seu-dominio.com
+
+### GET Request
+### Listar todos os produtos
+GET {{baseUrl}}/produtos HTTP/1.1
+Content-Type: application/json
+
+### Buscar produto específico
+GET {{baseUrl}}/produtos/1 HTTP/1.1
+Content-Type: application/json
+
+### Listar todas as categorias
+GET {{baseUrl}}/index.php/categorias HTTP/1.1
+Content-Type: application/json
+
+### Buscar categoria específica
+GET {{baseUrl}}/index.php/categorias/2 HTTP/1.1
+Content-Type: application/json
+
+### POST Request
+POST {{baseUrl}}/index.php HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Produto Teste",
+    "preco": 99.99,
+    "descricao": "Descrição do produto"
+}
+
+### PUT Request
+PUT {{baseUrl}}/index.php HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Produto Atualizado",
+    "preco": 149.99,
+    "descricao": "Descrição atualizada"
+}
+
+### DELETE Request
+DELETE {{baseUrl}}/produtos/1 HTTP/1.1
+Content-Type: application/json
+
+### Buscar tela de produto
+GET {{baseUrl}}/tela_produtos/1 HTTP/1.1
+Content-Type: application/json
