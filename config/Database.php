@@ -1,9 +1,9 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "seu_banco";
-    private $username = "seu_usuario";
-    private $password = "sua_senha";
+    private $db_name = "server_driven_ui_db";
+    private $username = "root";
+    private $password = "";
     public $conn;
 
     public function getConnection() {

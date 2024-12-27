@@ -24,9 +24,15 @@ try {
         case 'produtos':
             $controller = new ProdutoController();
             switch($requestMethod) {
+                case 'POST':
+                    $jsonData = file_get_contents('php://input');
+                    $data = json_decode($jsonData, true);// Converte o JSON para um array associativo PHP
+                    $controller->post($data);
+                    break;
                 case 'GET':
                     if ($id) {
-                        $controller->show($id);
+                        $controller->get($id);
+                        // throw new Exception("Método GET con id");
                     } else {
                         $controller->index();
                     }
@@ -43,17 +49,30 @@ try {
             }
             break;
 
-        case 'tela_produtos':
+        // case 'tela_produtos':
+        case 'tela':
             $controller = new TelaController();
-            if ($id) {
-                $controller->produtoDetail($id);
-            } else {
-                throw new Exception("ID não fornecido");
+            switch($requestMethod) {
+                case 'POST':
+                    $jsonData = file_get_contents('php://input');
+                    $data = json_decode($jsonData, true);// Converte o JSON para um array associativo PHP
+                    $controller->postController($data);
+                break;
+                case 'GET':
+                    if ($id) {
+                        // $controller->produtoDetail($id);
+                        $controller->getController($id);
+                    } else {
+                        // $controller->index();
+                        throw new Exception("ID não fornecido");
+                    }
+                break;
+                default:
+                    throw new Exception("Método não permitido");
             }
-            break;
-
+        break;
         default:
-            throw new Exception("Controller não encontrado");
+            throw new Exception("Controller não encontrado - ".$controller." - ".$requestUri." - ".$params[0]);
     }
 } catch (Exception $e) {
     http_response_code(400);

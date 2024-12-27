@@ -14,12 +14,21 @@ class ProdutoController extends BaseController {
         $this->successResponse($produtos, 'Lista de produtos');
     }
 
-    public function show($id) {
+    public function get($id) {
         $produto = $this->produto->getById($id);
         if ($produto) {
             $this->successResponse($produto, 'Produto encontrado');
         } else {
-            $this->errorResponse('Produto não encontrado', 404);
+            $this->errorResponse('Produto não encontrado '.$produto." - ".$id, 404);
+        }
+    }
+
+    public function post($data) {
+        try {
+            $id = $this->produto->post($data);
+            $this->successResponse(['id' => $id], 'Produto criado com sucesso');
+        } catch (Exception $e) {
+            $this->errorResponse($e->getMessage(), 500);
         }
     }
 

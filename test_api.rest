@@ -1,14 +1,15 @@
 ### Variáveis globais
 @baseUrl = http://localhost/fv/server_driven_ui_php
+# @baseUrl = http://192.168.100.33/fv/server_driven_ui_php/produtos
 # ou @baseUrl = http://seu-dominio.com
 
 ### GET Request
 ### Listar todos os produtos
-GET {{baseUrl}}/produtos HTTP/1.1
+GET {{baseUrl}}/index.php/produtos HTTP/1.1
 Content-Type: application/json
 
 ### Buscar produto específico
-GET {{baseUrl}}/produtos/1 HTTP/1.1
+GET {{baseUrl}}/index.php/produtos/4 HTTP/1.1
 Content-Type: application/json
 
 ### Listar todas as categorias
@@ -20,19 +21,20 @@ GET {{baseUrl}}/index.php/categorias/2 HTTP/1.1
 Content-Type: application/json
 
 ### POST Request
-POST {{baseUrl}}/index.php HTTP/1.1
+POST {{baseUrl}}/index.php/produtos HTTP/1.1
 Content-Type: application/json
 
 {
-    "nome": "Produto Teste",
+    "nome": "Produto Teste 5",
     "preco": 99.99,
-    "descricao": "Descrição do produto"
+    "descricao": "Descrição do produto 05",
+    "categoria": "ferramenta"
 }
 
 ### PUT Request
 PUT {{baseUrl}}/index.php HTTP/1.1
 Content-Type: application/json
-
+]
 {
     "nome": "Produto Atualizado",
     "preco": 149.99,
@@ -43,6 +45,56 @@ Content-Type: application/json
 DELETE {{baseUrl}}/produtos/1 HTTP/1.1
 Content-Type: application/json
 
-### Buscar tela de produto
-GET {{baseUrl}}/tela_produtos/1 HTTP/1.1
+
+############################################################
+############################################################
+############################################################
+
+### Buscar tela
+GET {{baseUrl}}/index.php/tela/1 HTTP/1.1
 Content-Type: application/json
+
+### Criar nova tela
+POST {{baseUrl}}/index.php/tela HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Tela Principal",
+    "descricao": "Tela inicial do aplicativo",
+    "components": [
+        {
+            "key": "MyComponent",
+            "value": {
+                "text": "Hello World"
+            }
+        },
+        {
+            "key": "CraftDTextView",
+            "value": {
+                "text": "Hello World CraftD",
+                "textSize": "40",
+                "textColorHex": "#D977EB"
+            }
+        },
+        {
+            "key": "CraftDButton",
+            "value": {
+                "text": "Some Action like this :)",
+                "align": "RIGHT",
+                "textAlign": "CENTER",
+                "textAllCaps": true,
+                "textSize": "20",
+                "textColorHex": "#FFFFFF",
+                "backgroundHex": "#2fa003",
+                "actionProperties": {
+                    "deeplink": "CraftDview://any",
+                    "analytics": {
+                        "category": "hello",
+                        "action": "world",
+                        "label": "everywhere"
+                    }
+                }
+            }
+        }
+    ]
+}

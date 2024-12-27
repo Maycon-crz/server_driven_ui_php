@@ -24,7 +24,19 @@ class Produto {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    public function post($data) {
+        $query = "INSERT INTO " . $this->table . " (nome, descricao, categoria, preco) VALUES (:nome, :descricao, :categoria, :preco)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":nome", $data['nome']);
+        $stmt->bindParam(":descricao", $data['descricao']);
+        $stmt->bindParam(":categoria", $data['categoria']);
+        $stmt->bindParam(":preco", $data['preco']);
+        
+        if ($stmt->execute()) {
+            return $this->conn->lastInsertId();
+        }
+        return false;
+    }
     public function delete($id) {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
