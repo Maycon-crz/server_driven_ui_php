@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/Database.php';
 
-class Tela {
+class TelaModel {
     private $conn;
     private $table = "telas";
 

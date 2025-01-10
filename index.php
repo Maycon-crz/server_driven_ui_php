@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 require_once 'controllers/ProdutoController.php';
 require_once 'controllers/TelaController.php';
+require_once 'controllers/AuthenticationController.php';
 
 // Parse URL
 $requestUri = str_replace('/fv/server_driven_ui_php/index.php', '', $_SERVER['REQUEST_URI']);
@@ -21,6 +22,36 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 // Route the request
 try {
     switch($controller) {
+        case 'login':
+            $controller = new \controllers\AuthenticationController();
+            
+            http_response_code(200);
+            echo json_encode([
+                'status' => 'success',
+                'message' => $controller->loginController()
+            ]);
+        break;
+        case 'tela':
+            $controller = new TelaController();
+            switch($requestMethod) {
+                case 'POST':
+                    $jsonData = file_get_contents('php://input');
+                    $data = json_decode($jsonData, true);// Converte o JSON para um array associativo PHP
+                    $controller->postController($data);
+                break;
+                case 'GET':
+                    if ($id) {
+                        // $controller->produtoDetail($id);
+                        $controller->getController($id);
+                    } else {
+                        // $controller->index();
+                        throw new Exception("ID não fornecido");
+                    }
+                break;
+                default:
+                    throw new Exception("Método não permitido");
+            }
+        break;
         case 'produtos':
             $controller = new ProdutoController();
             switch($requestMethod) {
@@ -44,29 +75,6 @@ try {
                         throw new Exception("ID não fornecido");
                     }
                     break;
-                default:
-                    throw new Exception("Método não permitido");
-            }
-            break;
-
-        // case 'tela_produtos':
-        case 'tela':
-            $controller = new TelaController();
-            switch($requestMethod) {
-                case 'POST':
-                    $jsonData = file_get_contents('php://input');
-                    $data = json_decode($jsonData, true);// Converte o JSON para um array associativo PHP
-                    $controller->postController($data);
-                break;
-                case 'GET':
-                    if ($id) {
-                        // $controller->produtoDetail($id);
-                        $controller->getController($id);
-                    } else {
-                        // $controller->index();
-                        throw new Exception("ID não fornecido");
-                    }
-                break;
                 default:
                     throw new Exception("Método não permitido");
             }

@@ -1,6 +1,6 @@
 ### Variáveis globais
-@baseUrl = http://localhost/fv/server_driven_ui_php
-# @baseUrl = http://192.168.100.33/fv/server_driven_ui_php/produtos
+# @baseUrl = http://localhost/fv/server_driven_ui_php
+@baseUrl = http://192.168.100.33/fv/server_driven_ui_php
 # ou @baseUrl = http://seu-dominio.com
 
 ### GET Request
@@ -97,4 +97,14 @@ Content-Type: application/json
             }
         }
     ]
+}
+
+### Login
+
+POST {{baseUrl}}/index.php/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "nmaycon304@gmail.com",
+    "password": "12345678A"
 }
